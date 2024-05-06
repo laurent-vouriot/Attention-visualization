@@ -47,13 +47,13 @@ Indeed most common attention scoring function can be formulated in the following
 *Additive attention* (Bahdanau et al.) : 
 ```math
 \begin{align} 
-    \alpha(q, k) = w^t_v tanh( W_q q + W_k K) 
+    f_{att}(x) = softmax(w^t_v tanh( W_q q + W_k K)) v
 \end{align}  
 ```
 
-*Scaled Dot Product attention*
+*Scaled Dot Product attention* (Vaswani et al.) : 
 ```math
 \begin{align}
-    \alpha(Q,K,V) = \frac{QK^t}{\sqrt{d}}
+    f_{att}(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d}})V
 \end{align}
 ```
