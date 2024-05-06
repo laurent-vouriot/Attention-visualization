@@ -40,4 +40,20 @@ Introducing the gaussian kernel in the previous equation :
 \end{align}
 ```
 
-We end up with a computation of the similarity between the query and the key $ -\frac{1}{2}(x - x_i)^2 $. Plugged into the softmax function to get a weight distribution. The label $y_i$ is the value. This derivation is just to display that kernel regression can be seen as a precursor of the modern attention formalism.
+We end up with a computation of the similarity between the query and the key $-\frac{1}{2}(x - x_i)^2 $. Plugged into the softmax function to get a weight distribution. The label $y_i$ is the value. This derivation is just to display that kernel regression can be seen as a precursor of the modern attention formalism. 
+
+Indeed most common attention scoring function can be formulated in the following form 
+
+*Additive attention* (Bahdanau et al.) : 
+```math
+\begin{align} 
+    \alpha(q, k) = w^t_v tanh( W_q q + W_k K) 
+\end{align}  
+```
+
+*Scaled Dot Product attention*
+```math
+\begin{align}
+    \alpha(Q,K,V) = \frac{QK^t}{\sqrt{d}}
+\end{align}
+```
