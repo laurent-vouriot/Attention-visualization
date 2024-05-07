@@ -20,7 +20,7 @@ Nadaraya and Watson proposed to estimate $m$ as a locally weighted average, usin
 K being a smoothing kernel. We can rewrite the above as follow : 
 ```math 
 \begin{align}
-    f(x) = \sum_{i=1}^n \alpha(x, x_i) y_i
+    f(x) = \sum_{i=1}^n \alpha(x, x_i) y_i \\
 
     \alpha(x, x_i) \triangleq  \frac{K(x - x_i)}{ \sum_{j=1}^n K(x - x_j)}y_i
     
