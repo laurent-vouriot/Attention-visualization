@@ -9,7 +9,7 @@ The goal of attention mechanism is to compute a similarity between your query an
 
 ## Some background 
 
-First Attention pooling idea can be attributed to Nadaraya–Watson kernel Regression. 
+Attention pooling concept can be attributed to Nadaraya–Watson kernel Regression. 
 Nadaraya and Watson proposed to estimate $m$ as a locally weighted average, using a kernel as a weighting function : 
 
 ```math
@@ -17,13 +17,17 @@ Nadaraya and Watson proposed to estimate $m$ as a locally weighted average, usin
     f(x) = \sum_{i=1}^n \frac{K(x - x_i)}{ \sum_{j=1}^n K(x - x_j)}y_i.
 \end{align}
 ```
-K being a kernel. In a more attention based perspective it can be written as : 
+K being a smoothing kernel. We can rewrite the above as follow : 
 ```math 
 \begin{align}
     f(x) = \sum_{i=1}^n \alpha(x, x_i) y_i
+
+    \alpha(x, x_i) \triangleq  \frac{K(x - x_i)}{ \sum_{j=1}^n K(x - x_j)}y_i
+    
 \end{align}
 ```
-$x$ being the keys, $x_i$ the query and $v$ the values and a the similarity function. 
+To display that the prediction is thus a weighted sum of the outputs at the training point, where the weights depends on the similarity of the key $x$ and the query $x_i$.  
+
 
 Let's use a gaussian Kernel 
 ```math
@@ -31,7 +35,7 @@ Let's use a gaussian Kernel
     K(u) = \frac{1}{\sqrt{2\pi}}exp(-\frac{u^2}{2}).
 \end{align}
 ```
-Introducing the gaussian kernel in the previous equation : 
+Introducing the gaussian kernel (RBF) in the previous equation : 
 ```math
 \begin{align}
     f(x) & = \sum_{i=1}^n \alpha(x, x_i) y_i \\
@@ -40,14 +44,15 @@ Introducing the gaussian kernel in the previous equation :
 \end{align}
 ```
 
-We end up with a computation of the similarity between the query and the key $-\frac{1}{2}(x - x_i)^2 $. Plugged into the softmax function to get a weight distribution. The label $y_i$ is the value. This derivation is just to display that kernel regression can be seen as a precursor of the modern attention formalism. 
+We end up with a computation of the similarity between the query and the key $-\frac{1}{2}(x - x_i)^2 $. We end up with a softmax function that returns a weight distribution. In this context the label $y_i$ is the value (according to the previous analogy, the restaurant). 
 
-Indeed most common attention scoring function can be formulated in the following form 
+
+## Most common attention mechanismes : 
 
 *Additive attention* (Bahdanau et al.) : 
 ```math
 \begin{align} 
-    f_{att}(x) = softmax(w^t_v tanh( W_q q + W_k K)) v
+    f_{att}(q, K, V) = softmax(w^t_v tanh( W_q q + W_k K)) v
 \end{align}  
 ```
 
@@ -57,3 +62,30 @@ Indeed most common attention scoring function can be formulated in the following
     f_{att}(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d}})V
 \end{align}
 ```
+
+### Scaled dot product is an RBF kernel : 
+
+From [Attention is Kernel Trick Reloaded] : 
+
+Let $\alpha_{ij}$ be $\frac{1}{Z_1(a)}exp\left(    \frac{q_i k_j^T}{\sqrt{d_k}} \right)$ where $Z_1(a)$ is a normalizing constant. i.e $\alpha_{ij}$ is out attention scoring function. Then $\alpha_{ij}$  has the form : 
+
+\begin{align}
+    \frac{1}{Z_1(a)}exp\left(    \frac{- \| q_i - k_j \|^2_2}{2 \sqrt{d_k}} \right) \times exp\left( \frac{\|q_i\|_2^2 + \|k_j\|_2^2}{2 \sqrt{d_k}} \right)  \\
+\end{align}
+where : 
+\begin{align}
+    \|q_i - k_j \|_2^2 = \|q_i\|_2^2 + \| k_j \|^2_2 - 2q_ik_j^T
+\end{align}
+
+$exp\left(    \frac{- \| q_i - k_j \|^2_2}{2 \sqrt{d_k}} \right)$  is an RBF kernel distance and $exp\left( \frac{\|q_i\|_2^2 + \|k_j\|_2^2}{2 \sqrt{d_k}} \right)$ is a magnitude term which weights each query-key pair. 
+
+
+
+
+
+
+
+
+
+
+
