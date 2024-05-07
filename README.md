@@ -68,14 +68,18 @@ We end up with a computation of the similarity between the query and the key $-\
 From [Attention is Kernel Trick Reloaded] : 
 
 Let $\alpha_{ij}$ be $\frac{1}{Z_1(a)}exp\left(    \frac{q_i k_j^T}{\sqrt{d_k}} \right)$ where $Z_1(a)$ is a normalizing constant. i.e $\alpha_{ij}$ is out attention scoring function. Then $\alpha_{ij}$  has the form : 
-
+```math
 \begin{align}
     \frac{1}{Z_1(a)}exp\left(    \frac{- \| q_i - k_j \|^2_2}{2 \sqrt{d_k}} \right) \times exp\left( \frac{\|q_i\|_2^2 + \|k_j\|_2^2}{2 \sqrt{d_k}} \right)  \\
 \end{align}
+``` 
+
 where : 
+```math
 \begin{align}
     \|q_i - k_j \|_2^2 = \|q_i\|_2^2 + \| k_j \|^2_2 - 2q_ik_j^T
 \end{align}
+```
 
 $exp\left(    \frac{- \| q_i - k_j \|^2_2}{2 \sqrt{d_k}} \right)$  is an RBF kernel distance and $exp\left( \frac{\|q_i\|_2^2 + \|k_j\|_2^2}{2 \sqrt{d_k}} \right)$ is a magnitude term which weights each query-key pair. 
 
