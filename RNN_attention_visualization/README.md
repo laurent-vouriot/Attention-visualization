@@ -258,6 +258,11 @@ for text, label in train_dataset.take(10):
     print('-'*80)
 ```
 
+**Output is supposed to look like this, but the colored display doesn't work with github README format**
+
+![Colored Text Example](output.png)
+
+
     1/1 [==============================] - 0s 33ms/step
     0.785986
     actual label 1
