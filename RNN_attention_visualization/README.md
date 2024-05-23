@@ -65,10 +65,11 @@ encoder.adapt(train_dataset.map(lambda text, label: text))
 
 Introduced by Vaswanie et al. 
 
+```math
 \begin{align}
     Attention(Q, K, V) = softmax \left( \frac{QK^T}{\sqrt{d_k}} \right) V  
 \end{align}
-
+```
 
 ```python
 def create_attention_lstm():
